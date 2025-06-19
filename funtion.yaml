@@ -1,0 +1,70 @@
+metadata:
+  name: YOLOv11-model
+  namespace: cvat
+  annotations:
+    name: YOLO-v11 my model
+    type: detector
+    spec: |
+      [
+        { "id": 0, "name": "nonuse", "type": "rectangle" },
+        { "id": 1, "name": "D", "type": "rectangle" },
+        { "id": 2, "name": "O2", "type": "rectangle" },
+        { "id": 3, "name": "O1", "type": "rectangle" },
+        { "id": 4, "name": "N2", "type": "rectangle" },
+        { "id": 5, "name": "N1", "type": "rectangle" },
+        { "id": 6, "name": "V2", "type": "rectangle" },
+        { "id": 7, "name": "V1", "type": "rectangle" },
+        { "id": 8, "name": "F2", "type": "rectangle" },
+        { "id": 9, "name": "F1", "type": "rectangle" }
+      ]
+
+spec:
+  description: YOLO v11 via pytorch
+  runtime: 'python:3.9'
+  handler: main:handler
+  eventTimeout: 30s
+  build:
+    image: cvat.pytorch.stf.yolov11:best-cpu     #it just the docker image name
+    baseImage: ubuntu:20.04
+
+    directives:
+      preCopy:
+        - kind: USER
+          value: root
+        - kind: RUN
+          value: apt update && apt install -y curl python3 python3-pip git libgl1 --no-install-recommends && rm -rf /var/lib/apt/lists/*
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: pip install ultralytics opencv-python-headless torch torchvision torchaudio numpy Pillow pyyaml
+        - kind: WORKDIR
+          value: /opt/nuclio
+        - kind: RUN
+          value: git clone https://github.com/Lin-Chien-Hung/model.git
+        - kind: RUN
+          value: cp ./model/* /opt/nuclio
+        - kind: RUN
+          value: ln -s /usr/bin/pip3 /usr/local/bin/pip && ln -s /usr/bin/python3 /usr/bin/python
+    
+  env:
+    - name: YOLO_CONFIG_DIR
+        value: /tmp/ultralytics_configs
+
+  triggers:
+    myHttpTrigger:
+      numWorkers: 2
+      kind: 'http'
+      workerAvailabilityTimeoutMilliseconds: 10000
+      attributes:
+        maxRequestBodySize: 33554432 # 32MB
+
+  # resources:
+    # limits:
+      # nvidia.com/gpu: 1
+
+  # platform:
+    # attributes:
+      # restartPolicy:
+        # name: always
+        # maximumRetryCount: 3
+      # mountMode: volume
