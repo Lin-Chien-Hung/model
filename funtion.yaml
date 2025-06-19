@@ -15,7 +15,7 @@ metadata:
         { "id": 6, "name": "V2", "type": "rectangle" },
         { "id": 7, "name": "V1", "type": "rectangle" },
         { "id": 8, "name": "F2", "type": "rectangle" },
-        { "id": 9, "name": "F1", "type": "rectangle" }
+        { "id": 9, "name": "F1", "type": "rectangle" },
         { "id": 10, "name": "P", "type": "rectangle" }
       ]
 
