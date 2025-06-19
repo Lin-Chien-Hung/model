@@ -63,9 +63,9 @@ spec:
     # limits:
       # nvidia.com/gpu: 1
 
-  # platform:
-    # attributes:
-      # restartPolicy:
-        # name: always
-        # maximumRetryCount: 3
-      # mountMode: volume
+  platform:
+    attributes:
+      restartPolicy:
+        name: always
+        maximumRetryCount: 3
+      mountMode: volume
