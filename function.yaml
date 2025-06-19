@@ -15,7 +15,8 @@ metadata:
         { "id": 6, "name": "V2", "type": "rectangle" },
         { "id": 7, "name": "V1", "type": "rectangle" },
         { "id": 8, "name": "F2", "type": "rectangle" },
-        { "id": 9, "name": "F1", "type": "rectangle" }
+        { "id": 9, "name": "F1", "type": "rectangle" },
+        { "id": 10, "name": "P", "type": "rectangle" }
       ]
 
 spec:
@@ -37,8 +38,6 @@ spec:
           value: /opt/nuclio
         - kind: RUN
           value: pip install ultralytics opencv-python-headless torch torchvision torchaudio numpy Pillow pyyaml
-        - kind: WORKDIR
-          value: /opt/nuclio
         - kind: RUN
           value: git clone https://github.com/Lin-Chien-Hung/model.git
         - kind: RUN
@@ -48,7 +47,7 @@ spec:
     
   env:
     - name: YOLO_CONFIG_DIR
-        value: /tmp/ultralytics_configs
+      value: /tmp/ultralytics_configs
 
   triggers:
     myHttpTrigger:
