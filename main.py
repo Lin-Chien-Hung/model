@@ -9,7 +9,7 @@ from PIL import Image
 import yaml
 
 def load_labels():
-    with open("./function.yaml", 'rb') as function_file:
+    with open("/opt/nuclio/function.yaml", 'rb') as function_file:
         functionconfig = yaml.safe_load(function_file)
     labels_spec = functionconfig['metadata']['annotations']['spec']
     
@@ -23,7 +23,7 @@ def load_labels():
 
 
 # Load model
-MODEL_PATH = "./Yolov11.pt"
+MODEL_PATH = "/opt/nuclio/Yolov11.pt"
 if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Model file not found: {MODEL_PATH}")
 
