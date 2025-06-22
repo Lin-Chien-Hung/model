@@ -39,9 +39,10 @@ spec:
         - kind: RUN
           value: pip install ultralytics opencv-python-headless torch torchvision torchaudio numpy Pillow pyyaml
         - kind: RUN
-          value: git clone https://github.com/Lin-Chien-Hung/model.git
-        - kind: RUN
-          value: cp ./model/* /opt/nuclio
+          value: cp /mnt/e/detection/Yolov11.pt /opt/nuclio
+          #value: git clone https://github.com/Lin-Chien-Hung/model.git
+        #- kind: RUN
+        #  value: cp ./model/* /opt/nuclio
         - kind: RUN
           value: ln -s /usr/bin/pip3 /usr/local/bin/pip && ln -s /usr/bin/python3 /usr/bin/python
     
